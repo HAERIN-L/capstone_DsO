@@ -7,21 +7,6 @@ pipeline {
               checkout scm 
            }
        }
-      stage('Docker Build') {
-           steps {
-            sh 'docker-compose build'
-           }
-       }
-      stage('Docker Deploy') {
-           steps {
-            sh 'docker-compose up -d'
-           }
-       }
-      stage('Testing') {
-           steps {
-            echo '> 2. Spider ..'
-           }
-       }
       
       
       
