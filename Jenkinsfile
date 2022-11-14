@@ -20,7 +20,7 @@ pipeline {
       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             sh 'sudo C:\Users\user\Desktop\owasp\Spider.py'
+             sh 'sudo C:/Users/user/Desktop/owasp/Spider.py'
            }
        }
       
