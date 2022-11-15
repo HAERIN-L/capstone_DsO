@@ -20,7 +20,7 @@ pipeline {
       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             bat 'Spider.py'
+             bat 'python C:/ProgramData/Jenkins/.jenkins/workspace/local_test/Python/Python310'
            }
        }
       
