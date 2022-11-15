@@ -20,7 +20,7 @@ pipeline {
       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             sh './Spider.py'
+             sh 'python C:/Users/user/AppData/Local/Programs/Python/Python310/Spider.py'
            }
        }
       
