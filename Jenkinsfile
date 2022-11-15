@@ -20,7 +20,7 @@ pipeline {
       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             bat './Spider.py'
+             bat 'Spider.py'
            }
        }
       
