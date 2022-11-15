@@ -20,7 +20,7 @@ pipeline {
       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             sh 'C:/Users/user/Desktop/owasp/Spider.py'
+             sh './Spider.py'
            }
        }
       
