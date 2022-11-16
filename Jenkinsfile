@@ -17,6 +17,11 @@ pipeline {
             bat 'docker-compose up -d'
            }
        }
+       stage('OWASP ZAP') {
+           steps {
+            bat 'python C:/Users/user/AppData/Local/Programs/Python/Python310/Auth.py'
+           }
+       }
      
    }
 }
