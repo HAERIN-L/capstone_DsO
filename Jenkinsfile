@@ -17,10 +17,10 @@ pipeline {
             bat 'docker-compose up -d'
            }
        }
-      stage('Testing') {
+       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             bat ' C:/Users/user/AppData/Local/Microsoft/WindowsApps/python3.exe C:/Users/user/AppData/Local/Microsoft/WindowsApps/Python/Python310/Auth.py'
+             bat 'C:/Users/user/AppData/Local/Microsoft/WindowsApps/python3.exe C:/Users/user/Desktop/Python/Python310/Spider.py'
            }
        }
 
