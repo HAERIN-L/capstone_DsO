@@ -19,7 +19,7 @@ pipeline {
        }
        stage('OWASP ZAP') {
            steps {
-            bat 'python C:/Users/user/AppData/Local/Programs/Python/Python310/Auth.py'
+            bat 'python3 C:/Users/user/AppData/Local/Programs/Python/Python310/Auth.py'
            }
        }
      
