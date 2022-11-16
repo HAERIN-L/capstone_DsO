@@ -17,12 +17,6 @@ pipeline {
             bat 'docker-compose up -d'
            }
        }
-      stage('Testing') {
-           
-       }
      
-
-     
-      
    }
 }
