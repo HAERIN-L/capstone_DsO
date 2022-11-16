@@ -9,7 +9,7 @@ pipeline {
        }
       stage('Docker Build') {
            steps {
-            bat '"C:/Program Files/Docker/Docker/resources/bin/docker-compose" up -d'
+            bat 'docker-compose up -d'
            }
        }
      
