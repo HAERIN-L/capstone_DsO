@@ -9,20 +9,10 @@ pipeline {
        }
       stage('Docker Build') {
            steps {
-            bat 'docker-compose build'
-           }
-       }
-      stage('Docker Deploy') {
-           steps {
             bat 'docker-compose up -d'
            }
        }
-       stage('Testing') {
-           steps {
-            echo '> 2. Spider ..'
-             bat 'python C:/Users/user/AppData/Local/Microsoft/WindowsApps/Python/Python310/Spider.py'
-           }
-       }
+     
 
      
       
