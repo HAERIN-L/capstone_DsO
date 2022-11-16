@@ -34,7 +34,7 @@ ENV FLASK_APP app
 ENV FLASK_APP development
 
 
-EXPOSE 5000
+EXPOSE 4900
 
 CMD [ "python", "app.py" ]
 
