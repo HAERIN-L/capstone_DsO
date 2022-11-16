@@ -20,7 +20,7 @@ pipeline {
       stage('Testing') {
            steps {
             echo '> 2. Spider ..'
-             bat ' C:/Users/user/AppData/Local/Microsoft/WindowsApps/python3.exe C:/Users/user/Desktop/Python/Python310/Auth.py'
+             bat ' C:/Users/user/AppData/Local/Microsoft/WindowsApps/python3.exe C:/Users/user/AppData/local/Programs/Python/Python310/Auth.py'
            }
        }
 
