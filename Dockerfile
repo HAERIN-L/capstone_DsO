@@ -22,7 +22,7 @@
 
 FROM python:3.7
 
-WORKDIR /usr/src/app
+WORKDIR ./app
 
 
 COPY requirements.txt ./
@@ -36,7 +36,8 @@ ENV FLASK_APP development
 
 EXPOSE 4900
 
-CMD [ "python", "app.py" ]
+ENTRYPOINT ["python"]
+CMD [ "app.py" ]
 
 
 #-----------------------------------
