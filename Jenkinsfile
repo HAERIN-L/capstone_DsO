@@ -26,7 +26,7 @@ pipeline {
       stage('OWASP ZAP') {
            steps {
               echo'> 1.Authentication Set..'
-              sh 'python C:/Users/user/Desktop/zap_test/Auth.py'
+              sh 'python Auth.py'
              
            }
        }
