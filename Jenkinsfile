@@ -1,6 +1,12 @@
 pipeline {
    agent any
    stages {
+      stage('Start') {
+            agent any
+            steps {
+                slackSend (channel: '#capstone_project', color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+            }
+        }
        stage('Github SourceCode Pull') {
            steps {
             
@@ -26,4 +32,12 @@ pipeline {
        }
 
    }
+   post {
+        success {
+            slackSend (channel: '#capstone_project', color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        failure {
+            slackSend (channel: '#capstone_project', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+    }
 }
