@@ -2,7 +2,6 @@ pipeline {
    agent any
    options {
       skipDefaultCheckout(true)
-      sikpDefaultStart(true)
    }
    stages {
       stage('Start') {
