@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+        <title>중고세계</title>
+        {% extends "base.html" %}
+        {% block content %}
+        <style>
+          .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+          }
+          
+          @media (min-width: 768px) {
+              .bd-placeholder-img-lg {
+                  font-size: 3.5rem;
+              }
+          }
+
+          * {margin:0;padding:0;box-sizing:border-box;}
+          ul, li {list-style:none;}
+
+          label.left {
+              left:20px;
+              background-color:#5F5F5F;
+              background-image:url('left-arrow.png');
+              background-position:center center;
+              background-size:50%;
+              background-repeat:no-repeat;
+          }
+          label.right {
+              right:20px;
+              background-color:#5F5F5F;
+              background-image:url('right-arrow.png');
+              background-position:center center;
+              background-size:50%;
+              background-repeat:no-repeat;
+          }      
+          button {
+            font-size: 20px;
+            margin: 5px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+
+          }   
+        </style>
+      </head>
+      <body class="vsc-initialized">
+        <nav class="navbar navbar-expand-lg navbar-white bg-white" role="navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand text-warning" href="#"><h3>Joonggoworld</h3></a>
+                <div class="collapse navbar-collapse" id="navbarColor02">
+                    <ul class="navbar-nav justify-content-end ml-auto">
+                        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                            Menu
+                            <svg class="svg-inline--fa fa-bars fa-w-14" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg><!-- <i class="fa fa-bars"></i> Font Awesome fontawesome.com -->
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav justify-content-end ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/list">게시판</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/register">회원가입</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/login">로그인</a></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/xss_stored">익명 커뮤니티</a></a>
+                                </li>
+                            </ul>
+                            
+                            <form class="d-flex flex-row">
+                                <input class="form-control" type="search" placeholder="찾으시는 상품을 검색해주세요..." aria-label="Search" style="width:300px;">
+                                <button class="btn btn-outline-warning" type="submit">search</button>
+                            </form>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="section">
+          <div>
+            <h1 class="title">아모멘토 22fw 풀니들 블루종 블랙 L</h1>
+            <hr>
+            <img src="{{ url_for('path_traversal_img') }}?img=image1.png" alt="" style="float: left; margin-right: 50px;" >
+            <div style="height: 30px;"></div>
+            <span style="margin-left:30px;font-size:20px;color: #3a3a3a;" >아모멘토 22fw 풀니들 블루종 블랙 L 판매합니다</span>
+            <div>
+              <span style="margin-left:30px;font-size:40px;" >21,000</span>
+              <span style="font-size:25px;">원</span>
+            </div>
+            <br>
+            <div style="margin: 10px;">
+              <span style="margin:10px;margin-left:30px;font-size:15px;color: #b1b1b1;">상품상태</span> 
+              <span style="margin:10px;font-size:15px;color: #000000; text-align: start;">중고</span>
+            </div>
+            <div style="margin: 10px;">
+              <span style="margin:10px;margin-left:30px;font-size:15px;color: #b1b1b1;">교환여부</span> 
+              <span style="margin:10px;font-size:15px;color: #ff0000; text-align: start;">교환불가능</span>
+            </div>
+            <div style="margin: 10px;">
+              <span style="margin:10px;margin-left:30px;font-size:15px;color: #b1b1b1;">배송비</span> 
+              <span style="margin:10px;font-size:15px;color: #ff0000; text-align: start;">배송비 별도</span>
+            </div>
+            <div style="margin: 10px;">
+              <span style="margin:10px;margin-left:30px;font-size:15px;color: #b1b1b1;">거래지역</span> 
+              <span style="margin:10px;font-size:15px;color: #000000; text-align: start;">충청남도 천안시 동남구 안서동</span>
+            </div>
+            <div>
+              <span style="margin-left:30px;color: #707070;">거래방법</span>
+              <div>
+                <button type="button" class="btn btn-primary" style="margin-left:30px; width: 100px; height:40px; background-color: #d3d3d3; color: #565656; outline: 0; border: 0;">직거래</button>
+                <button type="button" class="btn btn-primary" style="margin-left:10px; width: 100px; height:40px; background-color: #d3d3d3; color: #565656; outline: 0; border: 0;">택배거래</button>
+              </div>
+            </div>
+            <div style="margin: 10px;margin-left:30px;">
+              <button type="button" class="btn btn-primary btn-lg" style="width: 200px; height:75px; background-color: #ffb700; color: #ffffff; outline: 0; border: 0; border-radius: 0;">❤️ 찜</button>
+              <button type="button" class="btn btn-primary btn-lg" style="width: 200px; height:75px; background-color: #9d9d9d; color: #ffffff; outline: 0; border: 0; border-radius: 0;">🔎 사기조회</button>
+              <button type="button" class="btn btn-primary btn-lg" style="width: 200px; height:75px; background-color: #ff0000; color: #ffffff; outline: 0; border: 0; border-radius: 0;">🛒 구매하기</button>
+            </div>
+          </div>
+        </section>
+        <section>
+          <br>
+          <br>
+          <hr>
+          <div style="margin:10px;margin-left:30px;font-size:30px;color: #000000;">상품정보</div> 
+          <div style="margin-left:30px; border: 0px solid; padding:10px; text-align: center; background-color: #fff4d7;">
+            <div style="margin:10px;font-size:15px;color: #ff0000;">※ 거래 전 주의사항 안내</div>
+            <div style="margin:10px;font-size:15px;color: #000000;">판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을</div>
+            <div style="margin:10px;font-size:15px;color: #000000;">유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고</div>
+            <div style="margin:10px;font-size:15px;color: #ff0000;">고객센터로 신고해주시기 바랍니다. (1577-1234)</div>
+          </div>
+        </section>
+        <section>
+          <br>
+          <div style="margin:10px;margin-left:30px;font-size:15px;color: #000000;">세번 착용한 제품입니다.</div>
+          <div style="margin:10px;margin-left:30px;font-size:15px;color: #000000;">하자는 없으며 사이즈는 L입니다.</div>
+          <div style="margin:10px;margin-left:30px;font-size:15px;color: #000000;">배송비 별도로 3,000원 붙습니다.</div>
+          <div style="margin:10px;margin-left:30px;font-size:15px;color: #000000;">관심있으면 연락주세요.</div>
+          <div style="margin:10px;margin-left:30px;font-size:15px;color: #000000;">쿨거시 네고가능</div>
+        </section>
+        {% endblock %}
+        <footer class="py-5 bg-warning">
+          <div class="container"><p class="text-center text-white">Copyright © Capstone Design DsO</p></div>
+        </footer>
+  </body>
+</html>
