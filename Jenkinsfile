@@ -18,7 +18,7 @@ pipeline {
        }
       stage('Docker Build') {
            steps {
-            sh 'docker-compose build'
+            sh 'docker-machine start default'
            }
        }
       stage('Docker Deploy') {
