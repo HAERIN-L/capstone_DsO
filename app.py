@@ -12,7 +12,7 @@ from flask import Flask, flash, request, redirect
 from flask import url_for, render_template
 from werkzeug.utils import secure_filename
 #from xss_stored import xss_stored_page, xss_stored_api
-from util import get_root_dir
+from util import get_root_dir, get_uploads_folder_url
 from db_helper import db_helper
 from db_models import db_models
 from middlewares import require_api_key
@@ -24,6 +24,7 @@ from vulns.xssinjection.xss_reflected import xss_reflected_page
 from vulns.xssinjection.xss_stored import xss_stored_page, xss_stored_api
 from vulns.ssrf.ssrf import ssrf_page, ssrf_api
 from vulns.path_traversal.path_traversal import path_traversal_page, path_traversal_image
+from pathlib import Path
 
 app = Flask(__name__)
 
@@ -32,6 +33,7 @@ app.config['PUBLIC_UPLOAD_FOLDER'] = f"{get_root_dir()}/static/uploads"
 app.config['PUBLIC_IMG_FOLDER'] = f"{get_root_dir()}/static/img"
 app.config['STATIC_BASE_URL'] = '/static'
 app.config['PUBLIC_UPLOADS_URL'] = f"{app.config['STATIC_BASE_URL']}/uploads"
+ALLOWED_EXTENSIONS = ['.png', '.jpeg', '.jpg']
 
 app.secret_key = os.urandom(32)
 DATABASE = "database.db"
@@ -175,6 +177,10 @@ def read():
         conn.commit()
         return render_template("read.html")
 
+@app.route('/sell', methods=['GET', 'POST'])
+def sell():
+    return render_template('sell.html')
+
 """
 @app.route('/writecomment', methods=['GET', 'POST'])
 def writecomment():
@@ -289,6 +295,51 @@ def path_traversal_image(request, app):                 #넣지 않아도 작동
 
     return send_file(image_path)
 
+def file_upload_page():
+    return render_template('file_upload.html', file_url=None)
+
+
+def file_upload_api(request, app):
+    file = request.files['file']
+
+    if not _validate_file(file.filename):
+        return {
+            'message': 'Invalid file extension',
+            'allowed_ext': ALLOWED_EXTENSIONS,
+            'filename': file.filename
+        }, 422
+
+    saved_file_result = _save_temp_file(file, app)
+    saved_file_path = saved_file_result['saved_path']
+
+    file_name = Path(saved_file_path).name
+
+    public_upload_file_path = os.path.join(app.config['PUBLIC_UPLOAD_FOLDER'], file_name)
+    
+    os.system(f'mv {saved_file_path} {public_upload_file_path}')
+
+    return render_template('file_upload.html', file_url=f'{get_uploads_folder_url()}/{file_name}')
+
+
+def _validate_file(filename):
+    extension = os.path.splitext(filename)[1]
+    return extension in ALLOWED_EXTENSIONS
+
+
+def _save_temp_file(file, app):
+    original_file_name = file.filename
+    temp_upload_file_path = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], original_file_name)
+    file.save(temp_upload_file_path)
+    
+    resized_image_path = f'{temp_upload_file_path}.min.png'
+    # https://imagemagick.org/script/convert.php
+    command = f'convert "{temp_upload_file_path}" -resize 50% "{resized_image_path}"'
+    os.system(command)
+
+    return {
+        'saved_path': resized_image_path
+    }
+
 @app.route('/xss_stored', methods=['GET', 'POST'])
 def xss_stored():
     if request.method == 'GET':
@@ -340,44 +391,4 @@ def path_traversal():
 def path_traversal_img():
     return path_traversal_image(request, app)
 
-@app.route('/forgot_userpasswd', methods=['GET', 'POST'])
-def forgot_userpasswd():
-    if request.method == 'GET':
-        return render_template('forgot.html')
-    else:
-        userid = request.form.get("userid")
-        newuserpasswd = request.form.get("newuserpasswd")
-        backupCode = request.form.get("backupCode", type=int)
-
-        conn = get_db()
-        cur = conn.cursor()
-        user = cur.execute('SELECT * FROM user WHERE id = ?', (userid,)).fetchone()
-        if user:
-            if user['resetCount'] == MAXRESETCOUNT:
-                return "<script>alert('reset Count Exceed.');history.back(-1);</script>"
-            
-            if user['backupCode'] == backupCode:
-                newbackupCode = makeBackupcode()
-                updateSQL = "UPDATE user set pw = ?, backupCode = ?, resetCount = 0 where idx = ?"
-                cur.execute(updateSQL, (hashlib.sha256(newuserpasswd.encode()).hexdigest(), newbackupCode, str(user['idx'])))
-                msg = f"<b>userpasswd Change Success.</b><br/>New BackupCode : {newbackupCode}"
-
-            else:
-                updateSQL = "UPDATE user set resetCount = resetCount+1 where idx = ?"
-                cur.execute(updateSQL, (str(user['idx'])))
-                msg = f"Wrong BackupCode !<br/><b>Left Count : </b> {(MAXRESETCOUNT-1)-user['resetCount']}"
-            conn.commit()
-            return render_template("index.html", msg=msg)
-        return "<script>alert('User Not Found.');history.back(-1);</script>";
-
-
-@app.route('/user/<int:useridx>')
-def users(useridx):
-    conn = get_db()
-    cur = conn.cursor()
-    user = cur.execute('SELECT * FROM user WHERE idx = ?;', [str(useridx)]).fetchone()
-    
-    if user:
-        return render_template('user.html', user=user)
-    return "<script>alert('User Not Found.');history.back(-1);</script>";
 app.run(host='0.0.0.0', port=4900)
